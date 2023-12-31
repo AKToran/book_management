@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-+$1^a*c9^x__ugl-iwpkrxy11wn(d3k#*n8u%_^os57ix!l^kr
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ['https://bookmanagementss.onrender.com',"http://*.127.0.0.1"]
 
 # Application definition
 
