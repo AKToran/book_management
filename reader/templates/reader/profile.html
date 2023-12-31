@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    
+    <div class="container">
+      <h4 class="p-4">Reading History:</h4>
+      <div class="mx-4 border">
+        
+        <table class="table shadow">
+          <thead>
+            <tr>
+              <th scope="col">Book Id</th>
+              <th scope="col">Book Title</th>
+              <th scope="col">Price</th>
+              <th scope="col">Borrow Date</th>
+              <th scope="col">Return</th>
+            </tr>
+          </thead>
+          {% for h in history %}
+          {% for book in h.books.all %}
+          <tbody>
+            <tr>
+              <th scope="row"> {{book.id}} </th>
+              <td> {{book.title}} </td>
+              <td> {{book.price}} </td>
+              <td> {{h.date}} </td>
+              <td> {% if h.returned is False %}
+                <a href="{% url "return" book.id h.id %}" class="btn-sm btn-dark btn-outline-warning text-decoration-none">Return</a>
+                {% else %}
+                <a class="btn-sm btn-success text-decoration-none">Returned</a>
+                {% endif %} </td>
+            </tr>
+          </tbody>
+          {% endfor %}
+          {% endfor %}
+        </table>
+        
+      </div>     
+    </div>
+       
+{% endblock content %}

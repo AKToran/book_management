@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="d-flex p-5 gap-5"
+style="background-color: #fef0eb;">
+    <div class="shadow ms-5 w-25 col-5">
+      
+        {% if book.image %}
+        <img class="w-100 pb-2" src="{{book.image.url}}" alt="{{book.title}}">
+        {% else %}
+        <p>No Image Found!</p>
+        {% endif %}  
+    </div>
+
+    <div class="col-5 p-4 m-2">
+        <h4 class="card-title"> Name: {{book.title}} </h4>
+        <h5>Description:</h5>
+        <p> {{book.description}} </p>
+        <h4>Borrow Price: ${{book.price}} </h4> 
+        <a href="{% url "borrow" book.id %}" class="btn btn-dark btn-outline-light mt-4"> Borrow </a> 
+    </div>
+  </div>
+
+  <div class="card p-5"
+      style="background-color: #fef0eb">
+        <h5 class="card-header p-3">Total reviews : {{reviews | length}}</h5>
+          {% for review in reviews %}
+          <div class="card-body border">
+              <p><b>{{review.name}}</b> {{review.review_date}}</p>
+              <p> Rating: {{review.rating}} out of Five</p>
+              <p>{{review.body}}</p>
+          </div>
+          
+          {% endfor %}
+    </div>
+
+      {% if review_form is not None %}
+      <form style="background-color: #fef0eb"
+      action=""
+      class="p-5"
+      method="POST">
+      {% csrf_token %}
+        <h3>Leave a review:</h3>
+        {{review_form | crispy}}
+        <button class="btn btn-info">Post</button>
+      </form>
+      {% endif %}
+
+  
+
+{% endblock  %}
+
+
+

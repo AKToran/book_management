@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex flex-wrap">
+
+  <div class="col-2 bg-secondary text-light p-4 position-fixed vh-100">
+    <h5 class="text-light mx-2 mb-3">Sort By Category:</h5>
+    {% for category in categories %}
+        <h6 class="ms-2">
+          <a class="btn btn-outline-warning m-1" 
+          style="width: 150px; font-weight: 600;"
+          href="{% url "sort_category" category.slug %}">{{ category.name }}</a>
+        </h6>
+    {% endfor %}
+  </div>
+
+  <div class="col-10">
+    
+    
+    <h3 style="margin-left:250px;"> {{books | length}} results found </h3>
+    
+    <div style="margin-left:250px; margin-right:-200px;"
+    class="d-flex flex-wrap justify-content-center" >
+      {% for book in books %}
+          <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
+            <div class="card p-2 m-2 shadow w-100">
+              <div class="card-body">
+                {% if book.image %}
+                <img class="w-100 pb-2" src="{{book.image.url}}" alt="{{book.title}}">
+                {% else %}
+                <p>No Image Found!</p>
+                {% endif %}  
+                <h5 class="card-title">{{book.title}}</h5>
+                <p> 
+                  {% for cat in book.category.all %}
+                    <button href="#" class="btn btn-primary btn-sm m-1 border-0 bg-secondary"> {{cat.name}} </button>
+                  {% endfor %}
+                </p>
+
+                <a href="{% url "book_detail" book.id %}" class="btn btn-dark btn-outline-warning">View Details</a>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+      </div>
+      
+  </div>
+</div>
+
+{% endblock content %}
